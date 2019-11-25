@@ -16,9 +16,12 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            // Para configurar a coluna, pode colocar seta magra após os (), e o atributo
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('img_profile',300);
+            $table->integer('active');
             $table->rememberToken();
             $table->timestamps();
         });
