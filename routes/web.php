@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+// A classe Auth possui um método chamado routes, e aqui acesso esse método.
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

@@ -15,8 +15,9 @@ class User extends Authenticatable
      *
      * @var array
      */
+    // No $fillable coloco os campos que eu posso preencher no formulário
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'img_profile', 'active'
     ];
 
     /**

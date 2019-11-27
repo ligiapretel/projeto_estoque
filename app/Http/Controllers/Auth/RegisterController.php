@@ -49,6 +49,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            // Validações no campo do formulário, gerando mensagens de erro ao usuário
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -61,12 +62,25 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
+    // No controle do registro tenho que adicionar os outros campos
     protected function create(array $data)
     {
+        // Para salvar a imagem do perfil de usuário. Normalmente criamos uma regra via artisan que libera o acesso a pasta storage a outros usuários (como se fosse pública, já que o uusário precisará acessar a imagem de perfil dele). Por padrão, o Laravel salva as imagens na pasta storage.
+        $nomeArquivo = $data['imgProfile']->getClientOriginalName();
+        // Não preciso especificar a pasta app e public, o Laravel já entende que é a única pasta que posso acessar
+        $caminhoImg = "storage/profile/$nomeArquivo";
+        // No storeAs - funçaõ para salvar na storage - preciso passar aonde vou salvar e o nome do meu caminho. Aqui preciso especificar o caminho usando o public.
+        $resultado = $data['imgProfile']->storeAs('public/profile',$nomeArquivo);
+        
+        // dd($data['imgProfile']->getClientSize());
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            // Salvo no BD o caminho da imagem que criei mais acima
+            'img_profile' => $caminhoImg,
+            'active' => 1
         ]);
     }
 }

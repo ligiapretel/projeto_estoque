@@ -20,6 +20,8 @@ class CreateProducts extends Migration
             $table->integer('quantity');
             // No float, os números indicam a quantidade de casas antes da vírgula e depois da vírgula
             $table->float('price',8,2);
+            // Antes de criar a foreign key, eu crio a coluna que será foreign key. Precisa ser do mesmo tipo que está na tabela de referência, porém não posso usar novamente BigIncrements, senão ele criará como chave primária. Preciso alterar o tipo para unsignedBigInteger.
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
