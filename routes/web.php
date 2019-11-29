@@ -18,4 +18,9 @@ Route::get('/', function () {
 // A classe Auth possui um método chamado routes, e aqui acesso esse método.
 Auth::routes();
 
+// o name declarado no final é tipo um alias que dou para aquela rota toda
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/produtos/cadastrar', 'ProductController@viewFormProduct');
+
+Route::post('/produtos/cadastrar', 'ProductController@create');
