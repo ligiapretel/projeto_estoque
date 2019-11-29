@@ -73,15 +73,15 @@ class ProductController extends Controller
         $newProduct->user_id = Auth()->user()->id;
     }
 
-    public function delete(Request $request)
-        // Para deletar, usar Product::destroy($idProduto)
-    }
+    // public function delete(Request $request)
+    //     // Para deletar, usar Product::destroy($idProduto)
+    // }
 
-    public function viewAllProducts(Request $request)
-        // Usar Product::All
-    }
+    // public function viewAllProducts(Request $request)
+    //     // Usar Product::All
+    // }
 
-    public function viewOneProducts(Request $request)
-    // Usar Product::find($idProduto)
-    }
+    // public function viewOneProducts(Request $request)
+    // // Usar Product::find($idProduto)
+    // }
 }
