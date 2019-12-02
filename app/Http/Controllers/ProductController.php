@@ -46,7 +46,7 @@ class ProductController extends Controller
         //     echo "Lascou, deu ruim";
         // }
 
-        return view('products.form',['result'=>$result]);
+        return view('products.formRegister',['result'=>$result]);
 
     }
 
@@ -57,29 +57,53 @@ class ProductController extends Controller
 
     public function viewFormProduct(Request $request){
         // Aqui em vez da barra, uso . para indicar subpastas, já que o arquivo não está na raiz views.
-        return view('products.form');
+        return view('products.formRegister');
     }
 
+    // No parâmetro, passo um id=0, pois caso o usuário não tenha passado esse parâmetro, ele assume que id é igual a 0
+    public function viewFormUpdate(Request $request, $id=0){
+        // Dentro do () do find estou recuperando o que veio pela rota
+        $product = Product::find($id);
+        if($product){
+            // Passar um array associativo como parâmetro da view: primeiro o nome da associação, que pode ser qualquer nome, e depois a variável aonde armazenei o esse parâmetro.
+            return view('products.formUpdate',["product"=>$product]);
+        }else{
+            return view('products.formUpdate');
+        }
+    }
+
+    // Toda rota gera um objeto do tipo request, então preciso recebê-lo na função e dar um nome para ela
     public function update(Request $request){
         // Para atualizar devemos buscar um objeto ao invés de criar.
         // Devemos usar o método find($idProduto)
         // Será necessário usar rotas como parâmetro
 
-        $newProduct = Product::find(3);
-        $newProduct->name = $request->nameProduct;
-        $newProduct->description = $request->descriptionProduct;
-        $newProduct->quantity = $request->quantityProduct;
-        $newProduct->price = $request->priceProduct;
-        $newProduct->user_id = Auth()->user()->id;
+        // No find, o request traz tudo que foi enviado pelo usuário, então seleciono a informação pelo nome do atributo - igual ao que está no form    
+        $product = Product::find($request->idProduct);
+        $product->name = $request->nameProduct;
+        $product->description = $request->descriptionProduct;
+        $product->quantity = $request->quantityProduct;
+        $product->price = $request->priceProduct;
+
+        // O result é um booleano, então coloco como parâmetro da view para que a view exiba a informação de acordo com o booleano.
+        $result = $product->save();
+
+        return view('products.formUpdate',["result"=>$result]);
     }
 
-    // public function delete(Request $request)
-    //     // Para deletar, usar Product::destroy($idProduto)
-    // }
+    public function deleteProduct(Request $request, $id=0){
+        // Para deletar, usar Product::destroy($idProduto)
+        $result = Product::destroy($id);
+        if($result){
+            return redirect('/produtos');
+        }
+    }
 
-    // public function viewAllProducts(Request $request)
-    //     // Usar Product::All
-    // }
+    public function viewAllProducts(Request $request){
+        // Usar Product::All
+        $listProducts = Product::all();
+        return view('products.products',["listProducts"=>$listProducts]);
+    }
 
     // public function viewOneProducts(Request $request)
     // // Usar Product::find($idProduto)

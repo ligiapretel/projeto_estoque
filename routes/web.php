@@ -24,3 +24,17 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/produtos/cadastrar', 'ProductController@viewFormProduct');
 
 Route::post('/produtos/cadastrar', 'ProductController@create');
+
+// Rota parametrizada, o que está dentro das chaves é variável
+// A rota só existe se um id for passado. Para deixar opcional, coloco um ?
+Route::get('/produtos/atualizar/{id?}', 'ProductController@viewFormUpdate');
+
+// Rota para quando o usuário atualizar o formulário de produto, dados enviados via post
+Route::post('/produtos/atualizar', 'ProductController@update');
+
+// Criando rota para usuário visualizar lista de produtos
+Route::get('/produtos', 'ProductController@viewAllProducts');
+
+// Criando rota para usuário deletar produto
+Route::get('/produtos/deletar/{id?}', 'ProductController@deleteProduct');
+
