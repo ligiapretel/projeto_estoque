@@ -13,6 +13,7 @@ class Kernel extends HttpKernel
      *
      * @var array
      */
+    // No middleware abaixo é onde ficam todos os middleware criados de uso global, ou seja, todas as rotas passam por ele
     protected $middleware = [
         \App\Http\Middleware\TrustProxies::class,
         \App\Http\Middleware\CheckForMaintenanceMode::class,
@@ -50,6 +51,7 @@ class Kernel extends HttpKernel
      *
      * @var array
      */
+    // Aqui defino em qual rota quero usar o middleware criado. Senão coloco isso aqui, o Laravel não sabe que esse middleware está registrado.
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
@@ -61,6 +63,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'checkuser'=>\App\Http\Middleware\CheckUser::class
     ];
 
     /**

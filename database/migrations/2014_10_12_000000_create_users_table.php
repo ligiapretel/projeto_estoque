@@ -19,7 +19,9 @@ class CreateUsersTable extends Migration
             // Para configurar a coluna, pode colocar seta magra após os (), e o atributo
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
+            // Aqui armazeno o id da rede social (provider)
+            $table->string('provider_id',300)->unique();
             $table->string('img_profile',300);
             $table->integer('active');
             $table->rememberToken();

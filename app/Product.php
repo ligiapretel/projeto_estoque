@@ -15,7 +15,8 @@ class Product extends Model
     // public $timestamps = false;
 
     // Fazendo a associação das tabelas para cruzar dados de products e users.
-    public function users(){
+    // O nome da função precisa ser no singular, caso contrário o Laravel espera que seja uma relação N:N
+    public function user(){
         return $this->belongsTo('App\User');
     }
 }
